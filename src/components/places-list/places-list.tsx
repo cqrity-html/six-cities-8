@@ -2,6 +2,7 @@ import PlaceCard from '../place-card/place-card';
 
 type PlacesListProps = {
   onListItemHover: (listItemName: string) => void
+  onListTitleClick: (listItemId: string) => void
   places: {
     title: string;
     preview: string;
@@ -14,10 +15,15 @@ type PlacesListProps = {
 }[]
 };
 
-function PlacesList ({places, onListItemHover}: PlacesListProps):JSX.Element {
+function PlacesList ({places, onListItemHover, onListTitleClick}: PlacesListProps):JSX.Element {
   const listItemHoverHandler = (event: any) => {
     event.preventDefault();
     onListItemHover(event.currentTarget.id);
+  };
+
+  const listItemClickHandler = (event: any) => {
+    event.preventDefault();
+    onListTitleClick(event.currentTarget.id);
   };
 
   return (
@@ -31,6 +37,7 @@ function PlacesList ({places, onListItemHover}: PlacesListProps):JSX.Element {
             price={card.price}
             type={card.type}
             onMouseEnter={listItemHoverHandler}
+            onTitleClick={listItemClickHandler}
             id={card.id}
           />
         ),

@@ -6,13 +6,14 @@ type PlaceCardProps = {
   price: number
   type: string
   onMouseEnter: (event: any) => void
+  onTitleClick: (event: any) => void
   id: string
 };
 
-function PlaceCard ({offerTitle, preview, price, type, onMouseEnter, id}: PlaceCardProps): JSX.Element {
+function PlaceCard ({offerTitle, preview, price, type, onMouseEnter, onTitleClick, id}: PlaceCardProps): JSX.Element {
   const currentPath = `/offer/${id}`;
   return (
-    <article id={id} className="cities__place-card place-card" onMouseEnter={onMouseEnter}>
+    <article id={id} className="cities__place-card place-card" onMouseEnter={onMouseEnter} onClick={onTitleClick}>
       <div className="place-card__mark">
         <span>Premium</span>
       </div>

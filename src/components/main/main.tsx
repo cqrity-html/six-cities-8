@@ -5,6 +5,7 @@ import CITY from '../../mocks/city';
 import {Point} from '../../types/types';
 
 type MainProps = {
+  onListTitleClick: (listItemId: string) => void
   placesCount: number
   places: {
     title: string;
@@ -18,7 +19,7 @@ type MainProps = {
 }[]
 };
 
-function Main ({placesCount, places}: MainProps):JSX.Element {
+function Main ({placesCount, places, onListTitleClick}: MainProps):JSX.Element {
   const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(
     undefined,
   );
@@ -124,7 +125,7 @@ function Main ({placesCount, places}: MainProps):JSX.Element {
                     <li className="places__option" tabIndex={0}>Top rated first</li>
                   </ul>
                 </form>
-                <PlacesList places={places} onListItemHover={onListItemHover}/>
+                <PlacesList places={places} onListItemHover={onListItemHover} onListTitleClick={onListTitleClick}/>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">

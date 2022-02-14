@@ -11,4 +11,8 @@ export type Point = {
   lng: number;
 };
 
+export type OfferTitle = {
+  title: string;
+};
+
 export type Points = Point[];
