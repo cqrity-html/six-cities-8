@@ -1,19 +1,24 @@
+import {Link} from 'react-router-dom';
+
 type PlaceCardProps = {
   offerTitle: string
   preview: string
   price: number
   type: string
+  onMouseEnter: (event: any) => void
+  id: string
 };
 
-function PlaceCard ({offerTitle, preview, price, type}: PlaceCardProps): JSX.Element {
+function PlaceCard ({offerTitle, preview, price, type, onMouseEnter, id}: PlaceCardProps): JSX.Element {
+  const currentPath = `/offer/${id}`;
   return (
-    <article className="cities__place-card place-card">
+    <article id={id} className="cities__place-card place-card" onMouseEnter={onMouseEnter}>
       <div className="place-card__mark">
         <span>Premium</span>
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
-          <img className="place-card__image" src={preview} width="260" height="200" alt="Place image"/>
+        <a href="blank">
+          <img className="place-card__image" src={preview} width="260" height="200" alt="Place"/>
         </a>
       </div>
       <div className="place-card__info">
@@ -36,7 +41,7 @@ function PlaceCard ({offerTitle, preview, price, type}: PlaceCardProps): JSX.Ele
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{offerTitle}</a>
+          <Link className="header__logo-link header__logo-link--active" to={currentPath}>{offerTitle}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

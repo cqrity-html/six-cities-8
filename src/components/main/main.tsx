@@ -1,11 +1,33 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PlacesList from '../places-list/places-list';
+import Map from '../map/map';
+import CITY from '../../mocks/city';
+import {Point} from '../../types/types';
 
 type MainProps = {
   placesCount: number
+  places: {
+    title: string;
+    preview: string;
+    price: number;
+    type: string;
+    id: string;
+    lat: number;
+    lng: number;
+    reviews: string[];
+}[]
 };
 
-function Main ({placesCount}: MainProps): JSX.Element {
+function Main ({placesCount, places}: MainProps):JSX.Element {
+  const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(
+    undefined,
+  );
+
+  const onListItemHover = (listItemName: string) => {
+    const currentPoint = places.find((place) => place.id === listItemName);
+    setSelectedPoint(currentPoint);
+  };
+
   return (
     <React.Fragment>
       <div style={{display: 'none'}}>
@@ -20,21 +42,21 @@ function Main ({placesCount}: MainProps): JSX.Element {
           <div className="container">
             <div className="header__wrapper">
               <div className="header__left">
-                <a className="header__logo-link header__logo-link--active">
+                <a className="header__logo-link header__logo-link--active" href="blank">
                   <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
                 </a>
               </div>
               <nav className="header__nav">
                 <ul className="header__nav-list">
                   <li className="header__nav-item user">
-                    <a className="header__nav-link header__nav-link--profile" href="#">
+                    <a className="header__nav-link header__nav-link--profile" href="blank">
                       <div className="header__avatar-wrapper user__avatar-wrapper">
                       </div>
                       <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
                     </a>
                   </li>
                   <li className="header__nav-item">
-                    <a className="header__nav-link" href="#">
+                    <a className="header__nav-link" href="blank">
                       <span className="header__signout">Sign out</span>
                     </a>
                   </li>
@@ -50,32 +72,32 @@ function Main ({placesCount}: MainProps): JSX.Element {
             <section className="locations container">
               <ul className="locations__list tabs__list">
                 <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
+                  <a className="locations__item-link tabs__item" href="blank">
                     <span>Paris</span>
                   </a>
                 </li>
                 <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
+                  <a className="locations__item-link tabs__item" href="blank">
                     <span>Cologne</span>
                   </a>
                 </li>
                 <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
+                  <a className="locations__item-link tabs__item" href="blank">
                     <span>Brussels</span>
                   </a>
                 </li>
                 <li className="locations__item">
-                  <a className="locations__item-link tabs__item tabs__item--active">
+                  <a className="locations__item-link tabs__item tabs__item--active" href="blank">
                     <span>Amsterdam</span>
                   </a>
                 </li>
                 <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
+                  <a className="locations__item-link tabs__item" href="blank">
                     <span>Hamburg</span>
                   </a>
                 </li>
                 <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
+                  <a className="locations__item-link tabs__item" href="blank">
                     <span>Dusseldorf</span>
                   </a>
                 </li>
@@ -102,10 +124,12 @@ function Main ({placesCount}: MainProps): JSX.Element {
                     <li className="places__option" tabIndex={0}>Top rated first</li>
                   </ul>
                 </form>
-                <PlacesList />
+                <PlacesList places={places} onListItemHover={onListItemHover}/>
               </section>
               <div className="cities__right-section">
-                <section className="cities__map map"></section>
+                <section className="cities__map map">
+                  <Map points={places} city={CITY} selectedPoint={selectedPoint}/>
+                </section>
               </div>
             </div>
           </div>
