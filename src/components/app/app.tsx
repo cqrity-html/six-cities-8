@@ -27,30 +27,48 @@ type AppProps = {
 const isLogged = true;
 
 function App({placesCount, places}: AppProps):JSX.Element {
-  const [selectedOffer, setSelectedOffer] = useState<OfferTitle | undefined>(
-    undefined,
-  );
+  let [selectedOffer, setSelectedOffer] = useState({title: '', preview: '', price: 0, type: '', id: '', lat: 0, lng: 0, reviews: ['']});
 
-  const getCurrentOffer = () => {
-    const onListTitleClick = (listItemId: string) => {
-      const currentOffer = places.find((place) => place.id === listItemId);
-      setSelectedOffer(currentOffer);
-      console.log(currentOffer);
-      return currentOffer;
-    };
-    return onListTitleClick;
+  /*   let currentOffer = {
+    title: '',
+    preview: '',
+    price: 0,
+    type: '',
+    id: '',
+    lat: 0,
+    lng: 0,
+    reviews: [''],
+  }; */
+
+  const onListTitleClick = (listItemId: string) => {
+    const currentOffer = places.find((place) => place.id === listItemId);
+    setSelectedOffer(selectedOffer = currentOffer);
+    console.log(currentOffer);
+    console.log(selectedOffer);
   };
 
-  const currentOffer = getCurrentOffer();
-  console.log(currentOffer);
+  /*   const getCurrentOffer = (curOff) => {
+    const onListTitleClick = (listItemId: string) => {
+      curOff = places.find((place) => place.id === listItemId);
+      setSelectedOffer(curOff);
+      console.log(curOff);
+      console.log(curOff.title);
+      console.log(selectedOffer);
+      return curOff;
+    };
+  };
+
+  const rightOffer = getCurrentOffer(currentOffer);
+  console.log(selectedOffer);
+  */
 
   return (
     <Routes>
       <Route path='*' element={<Error />}/>
-      <Route path='/' element={<Main placesCount={placesCount} places={places} onListTitleClick={currentOffer}/>}/>
+      <Route path='/' element={<Main placesCount={placesCount} places={places} onListTitleClick={onListTitleClick}/>}/>
       <Route path='/login' element={<LogIn />}/>
       <Route path='/favorites' element={isLogged ? <Favorites places={places}/> : <LogIn />} />
-      <Route path='/offer/:id' element={<Offer places={places} title={currentOffer.title}/>}/>
+      <Route path='/offer/:id' element={<Offer places={places} title={selectedOffer.title}/>}/>
     </Routes>
   );
 }
