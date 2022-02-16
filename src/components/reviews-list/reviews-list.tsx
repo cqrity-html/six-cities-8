@@ -1,12 +1,16 @@
-import React from 'react';
 import ReviewsItem from '../reviews-item/reviews-item';
 
-function ReviewsList () {
+type ReviewsListProps = {
+  reviewsCount: number
+  reviews: string[]
+};
+
+function ReviewsList ({reviewsCount, reviews}: ReviewsListProps): JSX.Element {
   return (
     <>
-      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
+      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewsCount}</span></h2>
       <ul className="reviews__list">
-        <ReviewsItem />
+        {reviews.map((review) => <ReviewsItem key={`review-${review}`} reviewText={review}/>)}
       </ul>
     </>
   );

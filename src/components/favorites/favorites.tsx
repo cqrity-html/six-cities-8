@@ -1,18 +1,10 @@
 import React from 'react';
 import Logo from '../logo/logo';
 import FavoritesList from '../favorites-list/favorites-list';
+import {OfferType} from '../../types/types';
 
 type FavoritesProps = {
-  places: {
-    title: string;
-    preview: string;
-    price: number;
-    type: string;
-    id: string;
-    lat: number;
-    lng: number;
-    reviews: string[];
-}[]
+  places: OfferType[]
 };
 
 function Favorites ({places}: FavoritesProps): JSX.Element {

@@ -3,29 +3,21 @@ import PlacesList from '../places-list/places-list';
 import Map from '../map/map';
 import CITY from '../../mocks/city';
 import {Point} from '../../types/types';
+import {OfferType} from '../../types/types';
 
 type MainProps = {
   onListTitleClick: (listItemId: string) => void
   placesCount: number
-  places: {
-    title: string;
-    preview: string;
-    price: number;
-    type: string;
-    id: string;
-    lat: number;
-    lng: number;
-    reviews: string[];
-}[]
+  places: OfferType[]
 };
 
 function Main ({placesCount, places, onListTitleClick}: MainProps):JSX.Element {
-  const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(
+  const [selectedPoint, setSelectedPoint] = useState<Point | any>(
     undefined,
   );
 
-  const onListItemHover = (listItemName: string) => {
-    const currentPoint = places.find((place) => place.id === listItemName);
+  const onListItemHover = (listItemId: string) => {
+    const currentPoint = places.find((place) => place.id === listItemId);
     setSelectedPoint(currentPoint);
   };
 

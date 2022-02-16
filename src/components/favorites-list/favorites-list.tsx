@@ -1,16 +1,8 @@
 import FavoritesCard from '../favorites-card/favorites-card';
+import {OfferType} from '../../types/types';
 
 type FavoritesListProps = {
-  places: {
-    title: string;
-    preview: string;
-    price: number;
-    type: string;
-    id: string;
-    lat: number;
-    lng: number;
-    reviews: string[];
-}[]
+  places: OfferType[]
 };
 
 function FavoritesList ({places}: FavoritesListProps): JSX.Element {
@@ -21,7 +13,7 @@ function FavoritesList ({places}: FavoritesListProps): JSX.Element {
           <FavoritesCard
             key={`card-${card.id}`}
             offerTitle={card.title}
-            preview={card.preview}
+            preview={card.previewImage}
             price={card.price}
             type={card.type}
           />

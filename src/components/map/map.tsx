@@ -32,8 +32,8 @@ function Map(props: MapProps): JSX.Element {
     if (map) {
       points.forEach((point) => {
         const marker = new Marker({
-          lat: point.lat,
-          lng: point.lng,
+          lat: point.location.latitude,
+          lng: point.location.longitude,
         });
         marker
           .setIcon(

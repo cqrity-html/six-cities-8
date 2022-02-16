@@ -5,16 +5,18 @@ type PlaceCardProps = {
   preview: string
   price: number
   type: string
-  onMouseEnter: (event: any) => void
-  onTitleClick: (event: any) => void
+  onMouseEnter?: (event: any) => void
+  onTitleClick?: (event: any) => void
   id: string
+  isPremium: boolean
+  isFavorite: boolean
 };
 
-function PlaceCard ({offerTitle, preview, price, type, onMouseEnter, onTitleClick, id}: PlaceCardProps): JSX.Element {
+function PlaceCard ({offerTitle, preview, price, type, onMouseEnter, onTitleClick, id, isPremium, isFavorite}: PlaceCardProps): JSX.Element {
   const currentPath = `/offer/${id}`;
   return (
     <article id={id} className="cities__place-card place-card" onMouseEnter={onMouseEnter} onClick={onTitleClick}>
-      <div className="place-card__mark">
+      <div className="place-card__mark" style={{display: isPremium ? 'static' : 'none'}}>
         <span>Premium</span>
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
@@ -29,7 +31,7 @@ function PlaceCard ({offerTitle, preview, price, type, onMouseEnter, onTitleClic
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button className="place-card__bookmark-button button" type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
+            <svg className="place-card__bookmark-icon" width="18" height="19" style={{fill: isFavorite ? '#4481c3' : 'none'}}>
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
             <span className="visually-hidden">To bookmarks</span>

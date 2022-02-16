@@ -5,62 +5,30 @@ import Favorites from '../favorites/favorites';
 import Offer from '../offer/offer';
 import LogIn from '../login/login';
 import Error from '../error/error';
-import {OfferTitle} from '../../types/types';
+import {OfferType} from '../../types/types';
+import {OfferState} from '../../const';
 //import MainEmpty from '../main-empty/main-empty';
 //import FavoritesEmpty from '../favorites-empty/favorites-empty';
 //import OfferNotLogged from '../offer-not-logged/offer-not-logged';
 
 type AppProps = {
   placesCount: number
-  places: {
-    title: string;
-    preview: string;
-    price: number;
-    type: string;
-    id: string;
-    lat: number;
-    lng: number;
-    reviews: string[];
-}[]
+  places: OfferType[]
 };
 
 const isLogged = true;
 
 function App({placesCount, places}: AppProps):JSX.Element {
-  let [selectedOffer, setSelectedOffer] = useState({title: '', preview: '', price: 0, type: '', id: '', lat: 0, lng: 0, reviews: ['']});
-
-  /*   let currentOffer = {
-    title: '',
-    preview: '',
-    price: 0,
-    type: '',
-    id: '',
-    lat: 0,
-    lng: 0,
-    reviews: [''],
-  }; */
+  const [selectedOffer, setSelectedOffer] = useState<any>(OfferState);
+  const [restOffers, setRestOffers] = useState<any>(places);
 
   const onListTitleClick = (listItemId: string) => {
-    const currentOffer = places.find((place) => place.id === listItemId);
-    setSelectedOffer(selectedOffer = currentOffer);
-    console.log(currentOffer);
-    console.log(selectedOffer);
+    const currentOffer: any = places.find((place) => place.id === listItemId);
+    const getRestOffers = places.slice().filter((place) => place.id !== currentOffer.id);
+    setSelectedOffer(currentOffer);
+    setRestOffers(getRestOffers);
+    window.scrollTo(0, 0);
   };
-
-  /*   const getCurrentOffer = (curOff) => {
-    const onListTitleClick = (listItemId: string) => {
-      curOff = places.find((place) => place.id === listItemId);
-      setSelectedOffer(curOff);
-      console.log(curOff);
-      console.log(curOff.title);
-      console.log(selectedOffer);
-      return curOff;
-    };
-  };
-
-  const rightOffer = getCurrentOffer(currentOffer);
-  console.log(selectedOffer);
-  */
 
   return (
     <Routes>
@@ -68,7 +36,24 @@ function App({placesCount, places}: AppProps):JSX.Element {
       <Route path='/' element={<Main placesCount={placesCount} places={places} onListTitleClick={onListTitleClick}/>}/>
       <Route path='/login' element={<LogIn />}/>
       <Route path='/favorites' element={isLogged ? <Favorites places={places}/> : <LogIn />} />
-      <Route path='/offer/:id' element={<Offer places={places} title={selectedOffer.title}/>}/>
+      <Route path='/offer/:id' element={
+        <Offer
+          places={restOffers}
+          title={selectedOffer.title}
+          bedrooms={selectedOffer.bedrooms}
+          images={selectedOffer.images}
+          description={selectedOffer.description}
+          goods={selectedOffer.goods}
+          maxAdults={selectedOffer.maxAdults}
+          price={selectedOffer.price}
+          rating={selectedOffer.rating}
+          type={selectedOffer.type}
+          isPremium={selectedOffer.isPremium}
+          reviews={selectedOffer.reviews}
+          onListTitleClick={onListTitleClick}
+        />
+      }
+      />
     </Routes>
   );
 }

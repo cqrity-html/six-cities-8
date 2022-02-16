@@ -1,18 +1,10 @@
 import PlaceCard from '../place-card/place-card';
+import {OfferType} from '../../types/types';
 
 type PlacesListProps = {
-  onListItemHover: (listItemName: string) => void
+  onListItemHover: (listItemId: string) => void
   onListTitleClick: (listItemId: string) => void
-  places: {
-    title: string;
-    preview: string;
-    price: number;
-    type: string;
-    id: string;
-    lat: number;
-    lng: number;
-    reviews: string[];
-}[]
+  places: OfferType[]
 };
 
 function PlacesList ({places, onListItemHover, onListTitleClick}: PlacesListProps):JSX.Element {
@@ -33,12 +25,14 @@ function PlacesList ({places, onListItemHover, onListTitleClick}: PlacesListProp
           <PlaceCard
             key={`card-${card.id}`}
             offerTitle={card.title}
-            preview={card.preview}
+            preview={card.previewImage}
             price={card.price}
             type={card.type}
             onMouseEnter={listItemHoverHandler}
             onTitleClick={listItemClickHandler}
             id={card.id}
+            isPremium={card.isPremium}
+            isFavorite={card.isFavorite}
           />
         ),
       )}
