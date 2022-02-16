@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import PlacesList from '../places-list/places-list';
 import Map from '../map/map';
 import CITY from '../../mocks/city';
 import {Point} from '../../types/types';
 import {OfferType} from '../../types/types';
+import PlaceCard from '../place-card/place-card';
 
 type MainProps = {
   onListTitleClick: (listItemId: string) => void
@@ -19,6 +19,16 @@ function Main ({placesCount, places, onListTitleClick}: MainProps):JSX.Element {
   const onListItemHover = (listItemId: string) => {
     const currentPoint = places.find((place) => place.id === listItemId);
     setSelectedPoint(currentPoint);
+  };
+
+  const listItemHoverHandler = (event: any) => {
+    event.preventDefault();
+    onListItemHover(event.currentTarget.id);
+  };
+
+  const listItemClickHandler = (event: any) => {
+    event.preventDefault();
+    onListTitleClick(event.currentTarget.id);
   };
 
   return (
@@ -117,7 +127,24 @@ function Main ({placesCount, places, onListTitleClick}: MainProps):JSX.Element {
                     <li className="places__option" tabIndex={0}>Top rated first</li>
                   </ul>
                 </form>
-                <PlacesList places={places} onListItemHover={onListItemHover} onListTitleClick={onListTitleClick}/>
+                <div className="cities__places-list places__list tabs__content">
+                  {places.map((card) =>
+                    (
+                      <PlaceCard
+                        key={`card-${card.id}`}
+                        offerTitle={card.title}
+                        preview={card.previewImage}
+                        price={card.price}
+                        type={card.type}
+                        onMouseEnter={listItemHoverHandler}
+                        onTitleClick={listItemClickHandler}
+                        id={card.id}
+                        isPremium={card.isPremium}
+                        isFavorite={card.isFavorite}
+                      />
+                    ),
+                  )}
+                </div>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
