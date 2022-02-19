@@ -20,9 +20,7 @@ function PlaceCard ({offerTitle, preview, price, type, onMouseEnter, onTitleClic
         <span>Premium</span>
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="blank">
-          <img className="place-card__image" src={preview} width="260" height="200" alt="Place"/>
-        </a>
+        <img className="place-card__image" src={preview} width="260" height="200" alt="Place"/>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
