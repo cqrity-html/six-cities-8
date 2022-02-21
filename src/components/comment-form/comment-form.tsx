@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 
 class CommentForm extends PureComponent {
-  constructor (props: any) {
+  constructor (props: never) {
     super(props);
     this.state = {
       rating: '',
@@ -15,7 +15,7 @@ class CommentForm extends PureComponent {
     evt.preventDefault();
   }
 
-  handleFieldChange(evt: any) {
+  handleFieldChange(evt: { target: { name: string; value: string; }; }) {
     const {name, value} = evt.target;
     this.setState({[name]: value});
   }
@@ -77,7 +77,7 @@ class CommentForm extends PureComponent {
           </label>
         </div>
         <textarea
-          onInput={this.handleFieldChange}
+          onChange={this.handleFieldChange}
           className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"
         />
         <div className="reviews__button-wrapper">

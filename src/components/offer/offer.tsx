@@ -3,7 +3,7 @@ import Logo from '../logo/logo';
 import CommentForm from '../comment-form/comment-form';
 import Map from '../map/map';
 import ReviewsList from '../reviews-list/reviews-list';
-import CITY from '../../mocks/city';
+import CITY from '../../mocks/cities';
 import {OfferType} from '../../types/types';
 import PlaceCard from '../place-card/place-card';
 import {Point} from '../../types/types';

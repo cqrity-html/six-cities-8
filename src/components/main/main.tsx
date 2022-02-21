@@ -1,9 +1,14 @@
 import React, {useState} from 'react';
 import Map from '../map/map';
-import CITY from '../../mocks/city';
+import CITY from '../../mocks/cities';
 import {Point} from '../../types/types';
 import {OfferType} from '../../types/types';
 import PlaceCard from '../place-card/place-card';
+import {bindActionCreators, Dispatch} from 'redux';
+import {connect, ConnectedProps} from 'react-redux';
+import {CityChange, OfferListFill} from '../../store/action';
+import {Actions} from '../../types/action';
+import {State} from '../../types/state';
 
 type MainProps = {
   onListTitleClick: (listItemId: string) => void
@@ -11,7 +16,23 @@ type MainProps = {
   places: OfferType[]
 };
 
-function Main ({placesCount, places, onListTitleClick}: MainProps):JSX.Element {
+const mapDispatchToProps = (dispatch: Dispatch<Actions>) => bindActionCreators({
+  onCityChange: CityChange,
+  onOffersFill: OfferListFill,
+}, dispatch);
+
+const mapStateToProps = ({city, offers}: State) => ({
+  city,
+  offers,
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & MainProps;
+
+function Main (props: ConnectedComponentProps):JSX.Element {
+  const {placesCount, places, onListTitleClick, onCityChange, onOffersFill} = props;
   const [selectedPoint, setSelectedPoint] = useState<Point | any>(
     undefined,
   );
@@ -159,4 +180,5 @@ function Main ({placesCount, places, onListTitleClick}: MainProps):JSX.Element {
   );
 }
 
-export default Main;
+export {Main};
+export default connector(Main);

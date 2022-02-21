@@ -19,7 +19,7 @@ export const OfferState =   {
   host: {
     avatarUrl: '',
     id: 0,
-    isPro: '',
+    isPro: true,
     name: '',
   },
   id: '',
@@ -27,8 +27,8 @@ export const OfferState =   {
   isFavorite: true,
   isPremium: true,
   location: {
-    latitude: '',
-    longitude: '',
+    latitude: 0,
+    longitude: 0,
     zoom: 0,
   },
   maxAdults: 0,
@@ -37,4 +37,5 @@ export const OfferState =   {
   rating: 0,
   title: '',
   type: '',
+  reviews: [],
 };

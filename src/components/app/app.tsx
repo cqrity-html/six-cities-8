@@ -19,8 +19,8 @@ type AppProps = {
 const isLogged = true;
 
 function App({placesCount, places}: AppProps):JSX.Element {
-  const [selectedOffer, setSelectedOffer] = useState<any>(OfferState);
-  const [restOffers, setRestOffers] = useState<any>(places);
+  const [selectedOffer, setSelectedOffer] = useState<OfferType>(OfferState);
+  const [restOffers, setRestOffers] = useState<OfferType[]>(places);
 
   const onListTitleClick = (listItemId: string) => {
     const currentOffer: any = places.find((place) => place.id === listItemId);

@@ -46,6 +46,7 @@ export type OfferType = {
   rating: number;
   title: string;
   type: string;
+  reviews: string[],
 };
 
 export type Points = Point[];

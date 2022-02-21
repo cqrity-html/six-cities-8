@@ -1,16 +1,16 @@
 import {
   ActionType,
-  CityChangeAction,
-  OfferListFillAction
+  ChangeCityAction,
+  FillOffersAction
 } from '../types/action';
 import { City, OfferType } from '../types/types';
 
-export const CityChange = (city: City): CityChangeAction => ({
-  type: ActionType.CityChange,
+export const CityChange = (city: City): ChangeCityAction => ({
+  type: ActionType.ChangeCity,
   payload: city,
 });
 
-export const OfferListFill = (offers: OfferType): OfferListFillAction => ({
-  type: ActionType.OfferListFill,
+export const OfferListFill = (offers: OfferType): FillOffersAction => ({
+  type: ActionType.FillOffers,
   payload: offers,
 });
