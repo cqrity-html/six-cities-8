@@ -1,24 +1,22 @@
 import React, {useState} from 'react';
 import Map from '../map/map';
-import CITY from '../../mocks/cities';
 import {Point} from '../../types/types';
 import {OfferType} from '../../types/types';
 import PlaceCard from '../place-card/place-card';
 import {bindActionCreators, Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
-import {CityChange, OfferListFill} from '../../store/action';
+import {CityChange} from '../../store/action';
 import {Actions} from '../../types/action';
 import {State} from '../../types/state';
+import CitiesList from '../cities-list/cities-list';
 
 type MainProps = {
   onListTitleClick: (listItemId: string) => void
-  placesCount: number
-  places: OfferType[]
+  offers: OfferType[]
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => bindActionCreators({
   onCityChange: CityChange,
-  onOffersFill: OfferListFill,
 }, dispatch);
 
 const mapStateToProps = ({city, offers}: State) => ({
@@ -32,13 +30,22 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & MainProps;
 
 function Main (props: ConnectedComponentProps):JSX.Element {
-  const {placesCount, places, onListTitleClick, onCityChange, onOffersFill} = props;
+  const {onListTitleClick, onCityChange, city, offers} = props;
   const [selectedPoint, setSelectedPoint] = useState<Point | any>(
     undefined,
   );
+  const [selectedCity, setSelectedCity] = useState('Paris');
+
+  const cityClickHandler = (event: any) => {
+    event.preventDefault();
+    setSelectedCity(event.currentTarget.textContent);
+    event.currentTarget.classList.add('tabs__item--active');
+  };
+
+  const currentCityOffers = offers.filter((place) => place.city.name === selectedCity);
 
   const onListItemHover = (listItemId: string) => {
-    const currentPoint = places.find((place) => place.id === listItemId);
+    const currentPoint = offers.find((place) => place.id === listItemId);
     setSelectedPoint(currentPoint);
   };
 
@@ -94,45 +101,14 @@ function Main (props: ConnectedComponentProps):JSX.Element {
           <h1 className="visually-hidden">Cities</h1>
           <div className="tabs">
             <section className="locations container">
-              <ul className="locations__list tabs__list">
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="blank">
-                    <span>Paris</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="blank">
-                    <span>Cologne</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="blank">
-                    <span>Brussels</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item tabs__item--active" href="blank">
-                    <span>Amsterdam</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="blank">
-                    <span>Hamburg</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="blank">
-                    <span>Dusseldorf</span>
-                  </a>
-                </li>
-              </ul>
+              <CitiesList onCityClick={cityClickHandler} onCityChange={onCityChange}/>
             </section>
           </div>
           <div className="cities">
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{placesCount} places to stay in Amsterdam</b>
+                <b className="places__found">{currentCityOffers.length} places to stay in {selectedCity}</b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by</span>
                   <span className="places__sorting-type" tabIndex={0}>
@@ -149,7 +125,7 @@ function Main (props: ConnectedComponentProps):JSX.Element {
                   </ul>
                 </form>
                 <div className="cities__places-list places__list tabs__content">
-                  {places.map((card) =>
+                  {currentCityOffers.map((card) =>
                     (
                       <PlaceCard
                         key={`card-${card.id}`}
@@ -169,7 +145,7 @@ function Main (props: ConnectedComponentProps):JSX.Element {
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map points={places} city={CITY} selectedPoint={selectedPoint}/>
+                  <Map points={offers} city={city} selectedPoint={selectedPoint}/>
                 </section>
               </div>
             </div>

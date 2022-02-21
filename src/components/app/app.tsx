@@ -12,13 +12,12 @@ import {OfferState} from '../../const';
 //import OfferNotLogged from '../offer-not-logged/offer-not-logged';
 
 type AppProps = {
-  placesCount: number
   places: OfferType[]
 };
 
 const isLogged = true;
 
-function App({placesCount, places}: AppProps):JSX.Element {
+function App({places}: AppProps):JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState<OfferType>(OfferState);
   const [restOffers, setRestOffers] = useState<OfferType[]>(places);
 
@@ -33,7 +32,7 @@ function App({placesCount, places}: AppProps):JSX.Element {
   return (
     <Routes>
       <Route path='*' element={<Error />}/>
-      <Route path='/' element={<Main placesCount={placesCount} places={places} onListTitleClick={onListTitleClick}/>}/>
+      <Route path='/' element={<Main onListTitleClick={onListTitleClick}/>}/>
       <Route path='/login' element={<LogIn />}/>
       <Route path='/favorites' element={isLogged ? <Favorites places={places}/> : <LogIn />} />
       <Route path='/offer/:id' element={

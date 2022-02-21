@@ -14,7 +14,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App placesCount={placeCards.length} places={placeCards}/>
+        <App places={placeCards}/>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,

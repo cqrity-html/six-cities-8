@@ -3,7 +3,7 @@ import Logo from '../logo/logo';
 import CommentForm from '../comment-form/comment-form';
 import Map from '../map/map';
 import ReviewsList from '../reviews-list/reviews-list';
-import CITY from '../../mocks/cities';
+import CITIES from '../../const';
 import {OfferType} from '../../types/types';
 import PlaceCard from '../place-card/place-card';
 import {Point} from '../../types/types';
@@ -159,7 +159,7 @@ function Offer ({places, title, bedrooms, images, description, goods, maxAdults,
               </div>
             </div>
             <section className="property__map map">
-              <Map points={places} city={CITY} selectedPoint={selectedPoint}/>
+              <Map points={places} city={CITIES[3]} selectedPoint={selectedPoint}/>
             </section>
           </section>
           <div className="container">

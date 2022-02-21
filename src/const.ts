@@ -39,3 +39,44 @@ export const OfferState =   {
   type: '',
   reviews: [],
 };
+
+const CITIES = [
+  {
+    title: 'Paris',
+    lat: 48.8032,
+    lng: 2.3511,
+    zoom: 12,
+  },
+  {
+    title: 'Cologne',
+    lat: 50.9381,
+    lng: 6.95694,
+    zoom: 12,
+  },
+  {
+    title: 'Brussels',
+    lat: 50.8333,
+    lng: 4.35,
+    zoom: 12,
+  },
+  {
+    title: 'Amsterdam',
+    lat: 52.37403,
+    lng: 4.88969,
+    zoom: 12,
+  },
+  {
+    title: 'Hamburg',
+    lat: 42.7234,
+    lng: -78.8349,
+    zoom: 12,
+  },
+  {
+    title: 'Dusseldorf',
+    lat: 51.2256,
+    lng: 6.78278,
+    zoom: 12,
+  },
+];
+
+export default CITIES;
