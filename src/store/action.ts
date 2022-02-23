@@ -11,7 +11,7 @@ export const CityChange = (index: number): ChangeCityAction => ({
   payload: CITIES[index],
 });
 
-export const OfferListFill = (offers: OfferType[]): FillOffersAction => ({
+export const SetOffers = (offers: OfferType[]): FillOffersAction => ({
   type: ActionType.FillOffers,
   payload: offers,
 });

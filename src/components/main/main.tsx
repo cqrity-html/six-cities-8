@@ -5,7 +5,7 @@ import { Point } from '../../types/types';
 import PlacesList from '../places-list/places-list';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
-import { CityChange, OfferListFill} from '../../store/action';
+import { CityChange, SetOffers} from '../../store/action';
 import { Actions } from '../../types/action';
 import { State } from '../../types/state';
 import CitiesList from '../cities-list/cities-list';
@@ -20,7 +20,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>) =>
   bindActionCreators(
     {
       onCityChange: CityChange,
-      offerListFill: OfferListFill,
+      setOffers: SetOffers,
     },
     dispatch,
   );
@@ -36,7 +36,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & MainProps;
 
 function Main(props: ConnectedComponentProps): JSX.Element {
-  const { onListTitleClick, onCityChange, offerListFill, city, offers } = props;
+  const { onListTitleClick, onCityChange, setOffers, city, offers } = props;
   const [selectedPoint, setSelectedPoint] = useState<Point | any>(undefined);
   const [selectedCity, setSelectedCity] = useState(city.title);
   const cityClickHandler = (event: any) => {
@@ -58,9 +58,10 @@ function Main(props: ConnectedComponentProps): JSX.Element {
     event.preventDefault();
     onListTitleClick(event.currentTarget.id);
   };
-  console.log(city);
+
+  //console.log(city);
   useEffect(() => {
-    offerListFill(placeCards);
+    setOffers(placeCards);
   }, [city]);
 
   return (
