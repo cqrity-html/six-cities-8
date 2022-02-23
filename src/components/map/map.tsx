@@ -24,7 +24,6 @@ const currentCustomIcon = new Icon({
 
 function Map(props: MapProps): JSX.Element {
   const {city, points, selectedPoint} = props;
-
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -43,8 +42,9 @@ function Map(props: MapProps): JSX.Element {
           )
           .addTo(map);
       });
+      map.setView([city.lat, city.lng], city.zoom);
     }
-  }, [map, points, selectedPoint]);
+  }, [map, points, selectedPoint, city]);
 
   return <div style={{height: '100%'}} ref={mapRef}></div>;
 }

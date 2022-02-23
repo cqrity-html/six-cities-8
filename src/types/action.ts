@@ -12,7 +12,7 @@ export type ChangeCityAction = {
 
 export type FillOffersAction = {
   type: ActionType.FillOffers;
-  payload?: OfferType;
+  payload?: OfferType[] | any;
 };
 
 export type Actions = ChangeCityAction | FillOffersAction;

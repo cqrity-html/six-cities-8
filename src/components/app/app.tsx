@@ -7,9 +7,6 @@ import LogIn from '../login/login';
 import Error from '../error/error';
 import {OfferType} from '../../types/types';
 import {OfferState} from '../../const';
-//import MainEmpty from '../main-empty/main-empty';
-//import FavoritesEmpty from '../favorites-empty/favorites-empty';
-//import OfferNotLogged from '../offer-not-logged/offer-not-logged';
 
 type AppProps = {
   places: OfferType[]

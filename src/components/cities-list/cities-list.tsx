@@ -1,82 +1,38 @@
+import { useState } from 'react';
 import CITIES from '../../const';
-import {City} from '../../types/types';
+import { City } from '../../types/types';
+import {ChangeCityAction} from '../../types/action';
 
 type CititesListProps = {
-  onCityClick: (event: any) => void,
-  onCityChange: (event: any) => void,
+  onCityClick: (event: any) => void;
+  onCityChange: (index: number) => ChangeCityAction;
 };
 
 function CititesList({onCityClick, onCityChange}: CititesListProps): JSX.Element {
+  const [activeCity, setActiveCity] = useState(0);
+
+  const onCitySelect = (index: number) => {
+    setActiveCity(index);
+  };
+
   return (
     <ul className="locations__list tabs__list">
-      {CITIES.map((city: City) => (
-        <li key={city.title} className="locations__item">
+      {CITIES.map((city: City, index: number) => (
+        <li onClick={onCityClick} key={city.title} className="locations__item">
           <a
-            onClick={onCityClick}
-            className="locations__item-link tabs__item"
+            onClick={() => onCitySelect(index)}
+            className={
+              activeCity === index
+                ? 'locations__item-link tabs__item tabs__item--active'
+                : 'locations__item-link tabs__item'
+            }
             href="blank"
           >
-            <span onClick={onCityChange}>{city.title}</span>
+            <span onClick={() => onCityChange(index)}>{city.title}</span>
           </a>
         </li>
       ))}
     </ul>
-  /*     <ul className="locations__list tabs__list">
-      <li className="locations__item">
-        <a
-          onClick={onCityClick}
-          className="locations__item-link tabs__item tabs__item--active"
-          href="blank"
-        >
-          <span onClick={onCityChange}>Paris</span>
-        </a>
-      </li>
-      <li className="locations__item">
-        <a
-          onClick={onCityClick}
-          className="locations__item-link tabs__item"
-          href="blank"
-        >
-          <span onClick={onCityChange}>Cologne</span>
-        </a>
-      </li>
-      <li className="locations__item">
-        <a
-          onClick={onCityClick}
-          className="locations__item-link tabs__item"
-          href="blank"
-        >
-          <span onClick={onCityChange}>Brussels</span>
-        </a>
-      </li>
-      <li className="locations__item">
-        <a
-          onClick={onCityClick}
-          className="locations__item-link tabs__item"
-          href="blank"
-        >
-          <span onClick={onCityChange}>Amsterdam</span>
-        </a>
-      </li>
-      <li className="locations__item">
-        <a
-          onClick={onCityClick}
-          className="locations__item-link tabs__item"
-          href="blank"
-        >
-          <span onClick={onCityChange}>Hamburg</span>
-        </a>
-      </li>
-      <li className="locations__item">
-        <a
-          onClick={onCityClick}
-          className="locations__item-link tabs__item"
-          href="blank"
-        >
-          <span onClick={onCityChange}>Dusseldorf</span>
-        </a>
-      </li>
-    </ul> */
   );
 }
 

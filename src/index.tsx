@@ -9,6 +9,9 @@ import {reducer} from './store/reducer';
 import {composeWithDevTools} from 'redux-devtools-extension';
 
 const store = createStore(reducer, composeWithDevTools());
+console.log(store.getState());
+store.subscribe(() => console.log(store.getState()));
+
 
 ReactDOM.render(
   <React.StrictMode>
