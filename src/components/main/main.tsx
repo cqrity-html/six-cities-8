@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Map from '../map/map';
 import { Point } from '../../types/types';
-//import { OfferType } from '../../types/types';
 import PlacesList from '../places-list/places-list';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
@@ -9,11 +8,10 @@ import { CityChange, SetOffers} from '../../store/action';
 import { Actions } from '../../types/action';
 import { State } from '../../types/state';
 import CitiesList from '../cities-list/cities-list';
-import placeCards from '../../mocks/offers';
+//import placeCards from '../../mocks/offers';
 
 type MainProps = {
   onListTitleClick: (listItemId: string) => void;
-  //offers: OfferType[];
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) =>
@@ -59,10 +57,9 @@ function Main(props: ConnectedComponentProps): JSX.Element {
     onListTitleClick(event.currentTarget.id);
   };
 
-  //console.log(city);
-  useEffect(() => {
+  /*   useEffect(() => {
     setOffers(placeCards);
-  }, [city]);
+  }, []); */
 
   return (
     <React.Fragment>

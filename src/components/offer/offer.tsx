@@ -153,7 +153,7 @@ function Offer ({places, title, bedrooms, images, description, goods, maxAdults,
                   <div className="property__description">{description}</div>
                 </div>
                 <section className="property__reviews reviews">
-                  <ReviewsList reviewsCount={reviews.length} reviews={reviews}/>
+                  {/* <ReviewsList reviewsCount={reviews.length} reviews={reviews}/> */}
                   <CommentForm />
                 </section>
               </div>
