@@ -2,11 +2,10 @@ import React, {useState} from 'react';
 import Logo from '../logo/logo';
 import CommentForm from '../comment-form/comment-form';
 import Map from '../map/map';
-import ReviewsList from '../reviews-list/reviews-list';
-import CITIES from '../../const';
+//import ReviewsList from '../reviews-list/reviews-list';
 import {OfferType} from '../../types/types';
 import PlaceCard from '../place-card/place-card';
-import {Point} from '../../types/types';
+import {Point, City} from '../../types/types';
 
 type OfferProps = {
   places: OfferType[]
@@ -20,11 +19,13 @@ type OfferProps = {
   rating: number
   type: string
   isPremium: boolean
-  reviews: string[]
+  cityName: string
+  city: City
+  //reviews: string[]
   onListTitleClick: (listItemId: string) => void
 };
 
-function Offer ({places, title, bedrooms, images, description, goods, maxAdults, price, rating, type, isPremium, reviews, onListTitleClick}: OfferProps):JSX.Element {
+function Offer ({places, title, bedrooms, images, description, goods, maxAdults, price, rating, type, isPremium, cityName, city, /* reviews, */ onListTitleClick}: OfferProps):JSX.Element {
   const listItemHoverHandler = (event: any) => {
     event.preventDefault();
     onListItemHover(event.currentTarget.id);
@@ -43,6 +44,8 @@ function Offer ({places, title, bedrooms, images, description, goods, maxAdults,
     const currentPoint = places.find((place) => place.id === listItemId);
     setSelectedPoint(currentPoint);
   };
+
+  const reducedOffers = places.filter((place) => place.city.name === cityName).slice(0, 3);
 
   return (
     <React.Fragment>
@@ -159,14 +162,14 @@ function Offer ({places, title, bedrooms, images, description, goods, maxAdults,
               </div>
             </div>
             <section className="property__map map">
-              <Map points={places} city={CITIES[3]} selectedPoint={selectedPoint}/>
+              <Map points={reducedOffers} city={city} selectedPoint={selectedPoint}/>
             </section>
           </section>
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
               <div className="near-places__list places__list">
-                {places.map((card) =>
+                {reducedOffers.map((card) =>
                   (
                     <PlaceCard
                       key={`card-${card.id}`}

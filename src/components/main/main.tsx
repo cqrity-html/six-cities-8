@@ -1,40 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Map from '../map/map';
-import { Point } from '../../types/types';
 import PlacesList from '../places-list/places-list';
-import { bindActionCreators, Dispatch } from 'redux';
-import { connect, ConnectedProps } from 'react-redux';
-import { CityChange, SetOffers} from '../../store/action';
-import { Actions } from '../../types/action';
-import { State } from '../../types/state';
 import CitiesList from '../cities-list/cities-list';
-//import placeCards from '../../mocks/offers';
+import { Point, OfferType, City } from '../../types/types';
+import { ChangeCityAction } from '../../types/action';
 
 type MainProps = {
   onListTitleClick: (listItemId: string) => void;
+  onCityChange: (index: number) => ChangeCityAction;
+  city: City;
+  offers: OfferType[];
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) =>
-  bindActionCreators(
-    {
-      onCityChange: CityChange,
-      setOffers: SetOffers,
-    },
-    dispatch,
-  );
-
-const mapStateToProps = ({ city, offers }: State) => ({
+function Main({
+  onListTitleClick,
+  onCityChange,
   city,
   offers,
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & MainProps;
-
-function Main(props: ConnectedComponentProps): JSX.Element {
-  const { onListTitleClick, onCityChange, setOffers, city, offers } = props;
+}: MainProps): JSX.Element {
   const [selectedPoint, setSelectedPoint] = useState<Point | any>(undefined);
   const [selectedCity, setSelectedCity] = useState(city.title);
   const cityClickHandler = (event: any) => {
@@ -43,23 +26,21 @@ function Main(props: ConnectedComponentProps): JSX.Element {
   };
 
   const onListItemHover = (listItemId: string) => {
-    const currentPoint = offers.find((place) => place.id === listItemId);
+    const currentPoint = offers.find((offer) => offer.id === listItemId);
     setSelectedPoint(currentPoint);
+    //console.log(currentPoint);
   };
 
   const listItemHoverHandler = (event: any) => {
     event.preventDefault();
     onListItemHover(event.currentTarget.id);
+    //console.log(event.currentTarget.id);
   };
 
   const listItemClickHandler = (event: any) => {
     event.preventDefault();
     onListTitleClick(event.currentTarget.id);
   };
-
-  /*   useEffect(() => {
-    setOffers(placeCards);
-  }, []); */
 
   return (
     <React.Fragment>
@@ -163,5 +144,4 @@ function Main(props: ConnectedComponentProps): JSX.Element {
   );
 }
 
-export { Main };
-export default connector(Main);
+export default Main;

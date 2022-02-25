@@ -1,7 +1,7 @@
 import { ActionType, Actions } from '../types/action';
 import { State } from '../types/state';
-import placeCards from '../mocks/offers';
 import CITIES from '../const';
+import placeCards from '../mocks/offers';
 
 const initialState = {
   city: CITIES[0],
