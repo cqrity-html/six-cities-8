@@ -4,14 +4,30 @@ import {
   FillOffersAction
 } from '../types/action';
 import { OfferType } from '../types/types';
-import CITIES from '../const';
+import CITIES, {AuthorizationStatus} from '../const';
 
 export const CityChange = (index: number): ChangeCityAction => ({
-  type: ActionType.ChangeCity,
+  type: ActionType.CityChange,
   payload: CITIES[index],
 });
 
 export const SetOffers = (offers: OfferType[]): FillOffersAction => ({
-  type: ActionType.FillOffers,
+  type: ActionType.SetOffers,
   payload: offers,
 });
+
+export const LoadOffers = (offers: OfferType[]) => ({
+  type: ActionType.LoadOffers,
+  payload: {
+    offers,
+  },
+} as const);
+
+export const RequireAuthorization = (authorizationStatus: AuthorizationStatus) => ({
+  type: ActionType.LoadOffers,
+  authorizationStatus,
+} as const);
+
+export const RequireLogout = () => ({
+  type: ActionType.RequireLogout,
+} as const);

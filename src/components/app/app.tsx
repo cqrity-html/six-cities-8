@@ -53,43 +53,15 @@ function App(props: ConnectedComponentProps): JSX.Element {
   return (
     <Routes>
       <Route path="*" element={<Error />} />
-      <Route
-        path="/"
-        element={
-          <Main
-            onListTitleClick={onListTitleClick}
-            onCityChange={onCityChange}
-            city={city}
-            offers={offers}
-          />
-        }
+      <Route path="/"
+        element={<Main onListTitleClick={onListTitleClick} onCityChange={onCityChange} city={city} offers={offers}/>}
       />
       <Route path="/login" element={<LogIn />} />
-      <Route
-        path="/favorites"
+      <Route path="/favorites"
         element={isLogged ? <Favorites places={offers} /> : <LogIn />}
       />
-      <Route
-        path="/offer/:id"
-        element={
-          <Offer
-            places={restOffers}
-            title={selectedOffer.title}
-            bedrooms={selectedOffer.bedrooms}
-            images={selectedOffer.images}
-            description={selectedOffer.description}
-            goods={selectedOffer.goods}
-            maxAdults={selectedOffer.maxAdults}
-            price={selectedOffer.price}
-            rating={selectedOffer.rating}
-            type={selectedOffer.type}
-            isPremium={selectedOffer.isPremium}
-            //reviews={selectedOffer.reviews}
-            onListTitleClick={onListTitleClick}
-            city={city}
-            cityName={selectedOffer.city.name}
-          />
-        }
+      <Route path="/offer/:id"
+        element={<Offer places={restOffers} onListTitleClick={onListTitleClick} city={city} selectedOffer={selectedOffer}/* reviews={selectedOffer.reviews} *//>}
       />
     </Routes>
   );

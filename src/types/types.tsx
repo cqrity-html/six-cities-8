@@ -49,4 +49,9 @@ export type OfferType = {
   //reviews: string[],
 };
 
+export type AuthData = {
+  login: string,
+  password: string,
+};
+
 export type Points = Point[];

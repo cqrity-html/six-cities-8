@@ -8,24 +8,14 @@ import PlaceCard from '../place-card/place-card';
 import {Point, City} from '../../types/types';
 
 type OfferProps = {
+  selectedOffer: OfferType
   places: OfferType[]
-  title: string
-  bedrooms: number
-  images: string[]
-  description: string
-  goods: string[]
-  maxAdults: number
-  price: number
-  rating: number
-  type: string
-  isPremium: boolean
-  cityName: string
   city: City
-  //reviews: string[]
   onListTitleClick: (listItemId: string) => void
+  //reviews: string[]
 };
 
-function Offer ({places, title, bedrooms, images, description, goods, maxAdults, price, rating, type, isPremium, cityName, city, /* reviews, */ onListTitleClick}: OfferProps):JSX.Element {
+function Offer ({selectedOffer, places, city, onListTitleClick/*, reviews, */}: OfferProps):JSX.Element {
   const listItemHoverHandler = (event: any) => {
     event.preventDefault();
     onListItemHover(event.currentTarget.id);
@@ -45,7 +35,7 @@ function Offer ({places, title, bedrooms, images, description, goods, maxAdults,
     setSelectedPoint(currentPoint);
   };
 
-  const reducedOffers = places.filter((place) => place.city.name === cityName).slice(0, 3);
+  const reducedOffers = places.filter((place) => place.city.name === selectedOffer.city.name).slice(0, 3);
 
   return (
     <React.Fragment>
@@ -88,7 +78,7 @@ function Offer ({places, title, bedrooms, images, description, goods, maxAdults,
           <section className="property">
             <div className="property__gallery-container container">
               <div className="property__gallery">
-                {images.map((image) =>
+                {selectedOffer.images.map((image) =>
                   (
                     <div className="property__image-wrapper" key={image}>
                       <img className="property__image" src={image} alt="studio"/>
@@ -98,12 +88,12 @@ function Offer ({places, title, bedrooms, images, description, goods, maxAdults,
             </div>
             <div className="property__container container">
               <div className="property__wrapper">
-                <div className="property__mark" style={{display: isPremium ? 'static' : 'none'}}>
+                <div className="property__mark" style={{display: selectedOffer.isPremium ? 'static' : 'none'}}>
                   <span>Premium</span>
                 </div>
                 <div className="property__name-wrapper">
                   <h1 className="property__name">
-                    {title}
+                    {selectedOffer.title}
                   </h1>
                   <button className="property__bookmark-button button" type="button">
                     <svg className="property__bookmark-icon" width="31" height="33">
@@ -117,27 +107,27 @@ function Offer ({places, title, bedrooms, images, description, goods, maxAdults,
                     <span style={{width: '80%'}}></span>
                     <span className="visually-hidden">Rating</span>
                   </div>
-                  <span className="property__rating-value rating__value">{rating}</span>
+                  <span className="property__rating-value rating__value">{selectedOffer.rating}</span>
                 </div>
                 <ul className="property__features">
                   <li className="property__feature property__feature--entire">
-                    {type}
+                    {selectedOffer.type}
                   </li>
                   <li className="property__feature property__feature--bedrooms">
-                    {bedrooms} Bedrooms
+                    {selectedOffer.bedrooms} Bedrooms
                   </li>
                   <li className="property__feature property__feature--adults">
-                    Max {maxAdults} adults
+                    Max {selectedOffer.maxAdults} adults
                   </li>
                 </ul>
                 <div className="property__price">
-                  <b className="property__price-value">&euro;{price}</b>
+                  <b className="property__price-value">&euro;{selectedOffer.price}</b>
                   <span className="property__price-text">&nbsp;night</span>
                 </div>
                 <div className="property__inside">
                   <h2 className="property__inside-title">What&apos;s inside</h2>
                   <ul className="property__inside-list">
-                    {goods.map((good) => <li className="property__inside-item" key={`good-${good}`}>{good}</li>)}
+                    {selectedOffer.goods.map((good) => <li className="property__inside-item" key={`good-${good}`}>{good}</li>)}
                   </ul>
                 </div>
                 <div className="property__host">
@@ -153,7 +143,7 @@ function Offer ({places, title, bedrooms, images, description, goods, maxAdults,
                       Pro
                     </span>
                   </div>
-                  <div className="property__description">{description}</div>
+                  <div className="property__description">{selectedOffer.description}</div>
                 </div>
                 <section className="property__reviews reviews">
                   {/* <ReviewsList reviewsCount={reviews.length} reviews={reviews}/> */}
