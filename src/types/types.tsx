@@ -6,7 +6,7 @@ export type City = {
 };
 
 export type Point = {
-  title: string;
+  id: string;
   location: {
     latitude: number;
     longitude: number;
@@ -47,11 +47,6 @@ export type OfferType = {
   title: string;
   type: string;
   //reviews: string[],
-};
-
-export type AuthData = {
-  login: string,
-  password: string,
 };
 
 export type Points = Point[];

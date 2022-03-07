@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { BaseSyntheticEvent, useState } from 'react';
 import PlaceCard from '../place-card/place-card';
 import SortPopup from '../sort-popup/sort-popup';
 import { OfferType } from '../../types/types';
@@ -12,8 +12,8 @@ const sorts = [
 
 type PlacesListProps = {
   offers: OfferType[];
-  onMouseEnter: (event: any) => void;
-  onTitleClick: (event: any) => void;
+  onMouseEnter: (event: BaseSyntheticEvent) => void;
+  onTitleClick: (event: BaseSyntheticEvent) => void;
   selectedCity: string;
 };
 
@@ -91,6 +91,7 @@ function PlacesList({
             id={card.id}
             isPremium={card.isPremium}
             isFavorite={card.isFavorite}
+            rating={card.rating}
           />
         ))}
       </div>

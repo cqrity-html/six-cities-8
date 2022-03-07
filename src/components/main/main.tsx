@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { BaseSyntheticEvent, useState } from 'react';
 import Map from '../map/map';
 import PlacesList from '../places-list/places-list';
 import CitiesList from '../cities-list/cities-list';
@@ -18,9 +18,9 @@ function Main({
   city,
   offers,
 }: MainProps): JSX.Element {
-  const [selectedPoint, setSelectedPoint] = useState<Point | any>(undefined);
+  const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(undefined);
   const [selectedCity, setSelectedCity] = useState(city.title);
-  const cityClickHandler = (event: any) => {
+  const cityClickHandler = (event: BaseSyntheticEvent) => {
     event.preventDefault();
     setSelectedCity(event.currentTarget.textContent);
   };
@@ -28,16 +28,14 @@ function Main({
   const onListItemHover = (listItemId: string) => {
     const currentPoint = offers.find((offer) => offer.id === listItemId);
     setSelectedPoint(currentPoint);
-    //console.log(currentPoint);
   };
 
-  const listItemHoverHandler = (event: any) => {
+  const listItemHoverHandler = (event: BaseSyntheticEvent) => {
     event.preventDefault();
     onListItemHover(event.currentTarget.id);
-    //console.log(event.currentTarget.id);
   };
 
-  const listItemClickHandler = (event: any) => {
+  const listItemClickHandler = (event: BaseSyntheticEvent) => {
     event.preventDefault();
     onListTitleClick(event.currentTarget.id);
   };
@@ -85,26 +83,6 @@ function Main({
                   />
                 </a>
               </div>
-              <nav className="header__nav">
-                <ul className="header__nav-list">
-                  <li className="header__nav-item user">
-                    <a
-                      className="header__nav-link header__nav-link--profile"
-                      href="blank"
-                    >
-                      <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                      <span className="header__user-name user__name">
-                        Oliver.conner@gmail.com
-                      </span>
-                    </a>
-                  </li>
-                  <li className="header__nav-item">
-                    <a className="header__nav-link" href="blank">
-                      <span className="header__signout">Sign out</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
             </div>
           </div>
         </header>

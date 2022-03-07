@@ -1,3 +1,4 @@
+import { BaseSyntheticEvent } from 'react';
 import {Link} from 'react-router-dom';
 
 type PlaceCardProps = {
@@ -5,14 +6,15 @@ type PlaceCardProps = {
   preview: string
   price: number
   type: string
-  onMouseEnter?: (event: any) => void
-  onTitleClick?: (event: any) => void
+  onMouseEnter?: (event: BaseSyntheticEvent) => void
+  onTitleClick?: (event: BaseSyntheticEvent) => void
   id: string
   isPremium: boolean
   isFavorite: boolean
+  rating: number
 };
 
-function PlaceCard ({offerTitle, preview, price, type, onMouseEnter, onTitleClick, id, isPremium, isFavorite}: PlaceCardProps): JSX.Element {
+function PlaceCard ({offerTitle, preview, price, type, onMouseEnter, onTitleClick, id, isPremium, isFavorite, rating}: PlaceCardProps): JSX.Element {
   const currentPath = `/offer/${id}`;
   return (
     <article id={id} className="cities__place-card place-card" onMouseEnter={onMouseEnter} onClick={onTitleClick}>
@@ -37,7 +39,7 @@ function PlaceCard ({offerTitle, preview, price, type, onMouseEnter, onTitleClic
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: '80%'}}></span>
+            <span style={{ width: `${rating * 20}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

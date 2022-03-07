@@ -1,8 +1,6 @@
-import React, {useState} from 'react';
+import React, {BaseSyntheticEvent, useState} from 'react';
 import Logo from '../logo/logo';
-import CommentForm from '../comment-form/comment-form';
 import Map from '../map/map';
-//import ReviewsList from '../reviews-list/reviews-list';
 import {OfferType} from '../../types/types';
 import PlaceCard from '../place-card/place-card';
 import {Point, City} from '../../types/types';
@@ -12,21 +10,20 @@ type OfferProps = {
   places: OfferType[]
   city: City
   onListTitleClick: (listItemId: string) => void
-  //reviews: string[]
 };
 
-function Offer ({selectedOffer, places, city, onListTitleClick/*, reviews, */}: OfferProps):JSX.Element {
-  const listItemHoverHandler = (event: any) => {
+function Offer ({selectedOffer, places, city, onListTitleClick}: OfferProps):JSX.Element {
+  const listItemHoverHandler = (event: BaseSyntheticEvent) => {
     event.preventDefault();
     onListItemHover(event.currentTarget.id);
   };
 
-  const listItemClickHandler = (event: any) => {
+  const listItemClickHandler = (event: BaseSyntheticEvent) => {
     event.preventDefault();
     onListTitleClick(event.currentTarget.id);
   };
 
-  const [selectedPoint, setSelectedPoint] = useState<Point | any>(
+  const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(
     undefined,
   );
 
@@ -54,22 +51,6 @@ function Offer ({selectedOffer, places, city, onListTitleClick/*, reviews, */}: 
               <div className="header__left">
                 <Logo />
               </div>
-              <nav className="header__nav">
-                <ul className="header__nav-list">
-                  <li className="header__nav-item user">
-                    <a className="header__nav-link header__nav-link--profile" href='blank'>
-                      <div className="header__avatar-wrapper user__avatar-wrapper">
-                      </div>
-                      <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    </a>
-                  </li>
-                  <li className="header__nav-item">
-                    <a className="header__nav-link" href="blank">
-                      <span className="header__signout">Sign out</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
             </div>
           </div>
         </header>
@@ -104,7 +85,7 @@ function Offer ({selectedOffer, places, city, onListTitleClick/*, reviews, */}: 
                 </div>
                 <div className="property__rating rating">
                   <div className="property__stars rating__stars">
-                    <span style={{width: '80%'}}></span>
+                    <span style={{width: `${selectedOffer.rating * 20}%`}}></span>
                     <span className="visually-hidden">Rating</span>
                   </div>
                   <span className="property__rating-value rating__value">{selectedOffer.rating}</span>
@@ -134,20 +115,18 @@ function Offer ({selectedOffer, places, city, onListTitleClick/*, reviews, */}: 
                   <h2 className="property__host-title">Meet the host</h2>
                   <div className="property__host-user user">
                     <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                      <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar"/>
+                      <img className="property__avatar user__avatar" src={selectedOffer.host.avatarUrl} width="74" height="74" alt="Host avatar"/>
                     </div>
                     <span className="property__user-name">
-                      Angelina
+                      {selectedOffer.host.name}
                     </span>
-                    <span className="property__user-status">
+                    <span className="property__user-status" style={{display: selectedOffer.host.isPro ? 'static' : 'none'}}>
                       Pro
                     </span>
                   </div>
                   <div className="property__description">{selectedOffer.description}</div>
                 </div>
                 <section className="property__reviews reviews">
-                  {/* <ReviewsList reviewsCount={reviews.length} reviews={reviews}/> */}
-                  <CommentForm />
                 </section>
               </div>
             </div>
@@ -172,6 +151,7 @@ function Offer ({selectedOffer, places, city, onListTitleClick/*, reviews, */}: 
                       onTitleClick={listItemClickHandler}
                       isPremium={card.isPremium}
                       isFavorite={card.isFavorite}
+                      rating={card.rating}
                     />
                   ),
                 )}
