@@ -1,20 +1,71 @@
+import { useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import Main from '../main/main';
-//import MainEmpty from '../main-empty/main-empty';
+import Offer from '../offer/offer';
+import Error from '../error/error';
+import { OfferType } from '../../types/types';
+import { OfferState } from '../../const';
+import { bindActionCreators, Dispatch } from 'redux';
+import { connect, ConnectedProps } from 'react-redux';
+import { CityChange} from '../../store/action';
+import { Actions } from '../../types/action';
+import { State } from '../../types/state';
+import Spinner from '../spinner/spinner';
 
-//import Favorites from '../favorites/favorites';
-//import FavoritesEmpty from '../favorites-empty/favorites-empty';
+const mapDispatchToProps = (dispatch: Dispatch<Actions>) =>
+  bindActionCreators(
+    {
+      onCityChange: CityChange,
+    },
+    dispatch,
+  );
 
-//import Property from '../property/property';
-//import PropertyNotLogged from '../property-not-logged/property-not-logged';
+const mapStateToProps = ({ city, offers, isDataLoaded }: State) => ({
+  city,
+  offers,
+  isDataLoaded,
+});
 
-//import LogIn from '../login/login';
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
-type AppProps = {
-  placesCount: number
-};
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux;
 
-function App({placesCount}: AppProps): JSX.Element {
-  return <Main placesCount={312}/>;
+function App(props: ConnectedComponentProps): JSX.Element {
+  const { onCityChange, city, offers, isDataLoaded } = props;
+
+  const [selectedOffer, setSelectedOffer] = useState<OfferType>(OfferState);
+  const [restOffers, setRestOffers] = useState<OfferType[]>(offers);
+
+  const onListTitleClick = (listItemId: string) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const currentOffer: any = offers.find((offer) => offer.id === listItemId);
+    const getRestOffers = offers
+      .slice()
+      .filter((place) => place.id !== currentOffer.id);
+    setSelectedOffer(currentOffer);
+    setRestOffers(getRestOffers);
+    window.scrollTo(0, 0);
+  };
+
+  if (!isDataLoaded) {
+    return (
+      <Spinner />
+    );
+  }
+
+  return (
+    <Routes>
+      <Route path="*" element={<Error />} />
+      <Route path="/"
+        element={<Main onListTitleClick={onListTitleClick} onCityChange={onCityChange} city={city} offers={offers}/>}
+      />
+      <Route path="/offer/:id"
+        element={<Offer places={restOffers} onListTitleClick={onListTitleClick} city={city} selectedOffer={selectedOffer}/>}
+      />
+    </Routes>
+  );
 }
 
-export default App;
+export { App };
+export default connector(App);
