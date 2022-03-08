@@ -1,20 +1,28 @@
+import { BaseSyntheticEvent } from 'react';
+import {Link} from 'react-router-dom';
+
 type PlaceCardProps = {
   offerTitle: string
   preview: string
   price: number
   type: string
+  onMouseEnter?: (event: BaseSyntheticEvent) => void
+  onTitleClick?: (event: BaseSyntheticEvent) => void
+  id: string
+  isPremium: boolean
+  isFavorite: boolean
+  rating: number
 };
 
-function PlaceCard ({offerTitle, preview, price, type}: PlaceCardProps): JSX.Element {
+function PlaceCard ({offerTitle, preview, price, type, onMouseEnter, onTitleClick, id, isPremium, isFavorite, rating}: PlaceCardProps): JSX.Element {
+  const currentPath = `/offer/${id}`;
   return (
-    <article className="cities__place-card place-card">
-      <div className="place-card__mark">
+    <article id={id} className="cities__place-card place-card" onMouseEnter={onMouseEnter} onClick={onTitleClick}>
+      <div className="place-card__mark" style={{display: isPremium ? 'static' : 'none'}}>
         <span>Premium</span>
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
-          <img className="place-card__image" src={preview} width="260" height="200" alt="Place image"/>
-        </a>
+        <img className="place-card__image" src={preview} width="260" height="200" alt="Place"/>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -23,7 +31,7 @@ function PlaceCard ({offerTitle, preview, price, type}: PlaceCardProps): JSX.Ele
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button className="place-card__bookmark-button button" type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
+            <svg className="place-card__bookmark-icon" width="18" height="19" style={{fill: isFavorite ? '#4481c3' : 'none'}}>
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
             <span className="visually-hidden">To bookmarks</span>
@@ -31,12 +39,12 @@ function PlaceCard ({offerTitle, preview, price, type}: PlaceCardProps): JSX.Ele
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: '80%'}}></span>
+            <span style={{ width: `${rating * 20}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{offerTitle}</a>
+          <Link className="header__logo-link header__logo-link--active" to={currentPath}>{offerTitle}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
